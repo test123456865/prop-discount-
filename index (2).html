@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Prop Deals — کدهای تخفیف پراپ فرم‌ها</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-0:#07060c;
+    --bg-1:#0d0b16;
+    --card:#141220;
+    --card-2:#1a1728;
+    --border:#26223a;
+    --purple:#8b5cf6;
+    --purple-2:#a78bfa;
+    --purple-glow:#c084fc;
+    --text:#f4f2fa;
+    --muted:#8b879c;
+    --green:#4ade80;
+    --amber:#c9a86a;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+
+  html,body{
+    background:var(--bg-0);
+    color:var(--text);
+    font-family:'Vazirmatn',sans-serif;
+    min-height:100vh;
+  }
+
+  body{
+    display:flex;
+    justify-content:center;
+    padding:0;
+  }
+
+  .app{
+    width:100%;
+    max-width:480px;
+    min-height:100vh;
+    background:
+      radial-gradient(ellipse 600px 300px at 20% 0%, rgba(139,92,246,0.16), transparent 60%),
+      linear-gradient(180deg, var(--bg-1) 0%, var(--bg-0) 40%);
+    display:flex;
+    flex-direction:column;
+  }
+
+  /* ---------- Header ---------- */
+  .topbar{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:18px 20px 14px;
+    position:sticky;
+    top:0;
+    background:rgba(7,6,12,0.72);
+    backdrop-filter:blur(14px);
+    z-index:10;
+  }
+
+  .topbar .close{
+    color:var(--purple-2);
+    font-size:15px;
+    font-weight:500;
+    background:none;
+    border:none;
+    cursor:pointer;
+    font-family:inherit;
+  }
+
+  .topbar .title-wrap{
+    text-align:center;
+  }
+
+  .topbar .title-wrap h1{
+    font-size:16px;
+    font-weight:700;
+    color:var(--text);
+  }
+
+  .topbar .title-wrap span{
+    font-size:11px;
+    color:var(--muted);
+    font-weight:400;
+  }
+
+  .topbar .menu{
+    width:30px;
+    height:30px;
+    border-radius:50%;
+    border:1px solid var(--border);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:var(--purple-2);
+    font-size:16px;
+    letter-spacing:1px;
+  }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    padding:26px 20px 22px;
+    position:relative;
+    overflow:hidden;
+  }
+
+  .hero-badge{
+    display:flex;
+    align-items:center;
+    justify-content:flex-end;
+    gap:8px;
+    color:var(--purple-2);
+    font-size:13px;
+    font-weight:600;
+    margin-bottom:14px;
+  }
+
+  .hero-badge .dot{
+    width:22px;
+    height:22px;
+    border-radius:7px;
+    background:linear-gradient(135deg,var(--purple),#5b21b6);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:12px;
+    box-shadow:0 0 16px rgba(139,92,246,0.5);
+  }
+
+  .hero h2{
+    font-size:26px;
+    line-height:1.5;
+    font-weight:800;
+    text-align:right;
+  }
+
+  .hero h2 .accent{
+    color:var(--purple-glow);
+  }
+
+  .ticket-visual{
+    width:150px;
+    height:96px;
+    margin:18px auto 4px 0;
+    position:relative;
+  }
+
+  .ticket-visual svg{
+    width:100%;
+    height:100%;
+    filter:drop-shadow(0 12px 28px rgba(139,92,246,0.45));
+  }
+
+  .hero-sub{
+    margin-top:18px;
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:14px 16px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    font-size:13px;
+    color:#cfcbe0;
+    text-align:center;
+  }
+
+  /* ---------- Deal list ---------- */
+  .deals{
+    padding:4px 16px 8px;
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+  }
+
+  .deal-card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:18px;
+    padding:16px;
+    display:flex;
+    align-items:center;
+    gap:14px;
+  }
+
+  /* right block: logo + info (first in DOM = right side in RTL row) */
+  .deal-info{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    flex:1;
+    min-width:0;
+  }
+
+  .logo{
+    width:64px;
+    height:64px;
+    flex-shrink:0;
+    border-radius:16px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    position:relative;
+    overflow:hidden;
+  }
+
+  .logo.ftmo{ background:linear-gradient(160deg,#1c2b52,#0e1730); }
+  .logo.fivers{ background:#0c0c0c; }
+  .logo.fundednext{ background:linear-gradient(160deg,#4c2a9e,#2c1361); }
+  .logo.topstep{ background:#050505; }
+
+  .badge-fav{
+    position:absolute;
+    top:4px;
+    left:4px;
+    background:var(--purple);
+    color:#fff;
+    font-size:8.5px;
+    font-weight:700;
+    padding:2px 6px;
+    border-radius:20px;
+    display:flex;
+    align-items:center;
+    gap:2px;
+  }
+
+  .info-text{
+    min-width:0;
+  }
+
+  .info-text h3{
+    font-size:16px;
+    font-weight:700;
+    margin-bottom:4px;
+  }
+
+  .info-text p.desc{
+    font-size:12px;
+    color:var(--muted);
+    margin-bottom:6px;
+    line-height:1.5;
+  }
+
+  .info-text p.pct{
+    font-size:12.5px;
+    color:var(--green);
+    font-weight:600;
+    display:flex;
+    align-items:center;
+    gap:4px;
+  }
+
+  /* left block: code (last in DOM = left side in RTL row) */
+  .deal-code{
+    flex-shrink:0;
+    display:flex;
+    flex-direction:column;
+    align-items:flex-end;
+    gap:6px;
+  }
+
+  .deal-code .label{
+    font-size:11px;
+    color:var(--muted);
+  }
+
+  .code-pill{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    background:var(--card-2);
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:8px 10px;
+    cursor:pointer;
+    transition:border-color .15s ease, transform .1s ease;
+  }
+
+  .code-pill:active{
+    transform:scale(0.96);
+  }
+
+  .code-pill.copied{
+    border-color:var(--green);
+  }
+
+  .code-pill .code{
+    font-size:13px;
+    font-weight:700;
+    color:var(--purple-glow);
+    letter-spacing:0.3px;
+    white-space:nowrap;
+  }
+
+  .code-pill .copy-icon{
+    width:16px;
+    height:16px;
+    color:var(--muted);
+    flex-shrink:0;
+  }
+
+  .deal-code .expiry{
+    font-size:10.5px;
+    color:#6b6780;
+    display:flex;
+    align-items:center;
+    gap:4px;
+  }
+
+  /* ---------- Footer ---------- */
+  .trust{
+    margin:18px 16px 6px;
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:16px;
+    padding:16px;
+    display:flex;
+    align-items:center;
+    gap:12px;
+  }
+
+  .trust .shield{
+    width:38px;
+    height:38px;
+    border-radius:50%;
+    background:rgba(139,92,246,0.12);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:var(--purple-2);
+    flex-shrink:0;
+  }
+
+  .trust .text h4{
+    font-size:13px;
+    font-weight:700;
+    margin-bottom:3px;
+  }
+
+  .trust .text p{
+    font-size:11.5px;
+    color:var(--muted);
+    line-height:1.5;
+  }
+
+  .app-footer{
+    text-align:center;
+    padding:22px 16px 30px;
+    font-size:11.5px;
+    color:#59556c;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:5px;
+  }
+
+  .app-footer .heart{
+    color:var(--purple-2);
+  }
+
+  /* toast */
+  .toast{
+    position:fixed;
+    bottom:24px;
+    left:50%;
+    transform:translateX(-50%) translateY(20px);
+    background:#1c1930;
+    border:1px solid var(--border);
+    color:var(--text);
+    padding:10px 18px;
+    border-radius:30px;
+    font-size:13px;
+    opacity:0;
+    pointer-events:none;
+    transition:opacity .2s ease, transform .2s ease;
+    z-index:50;
+    display:flex;
+    align-items:center;
+    gap:6px;
+  }
+
+  .toast.show{
+    opacity:1;
+    transform:translateX(-50%) translateY(0);
+  }
+
+  .toast .dot{ color:var(--green); }
+</style>
+</head>
+<body>
+
+<div class="app">
+
+  <div class="topbar">
+    <button class="close" onclick="window.Telegram?.WebApp?.close?.()">Close</button>
+    <div class="title-wrap">
+      <h1>Prop Deals</h1>
+      <span>mini app</span>
+    </div>
+    <div class="menu">⋯</div>
+  </div>
+
+  <div class="hero">
+    <div class="hero-badge">
+      <span>کد تخفیف اختصاصی</span>
+      <span class="dot">🎁</span>
+    </div>
+    <h2>بهترین پراپ فرم‌ها<br>با <span class="accent">تخفیف ویژه</span></h2>
+
+    <div class="ticket-visual">
+      <svg viewBox="0 0 150 96" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="ticketGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#a78bfa"/>
+            <stop offset="100%" stop-color="#5b21b6"/>
+          </linearGradient>
+        </defs>
+        <path d="M14 8 H120 a10 10 0 0 1 10 10 v10 a8 8 0 0 0 0 16 v10 a8 8 0 0 0 0 16 v10 a10 10 0 0 1 -10 10 H14 a10 10 0 0 1 -10 -10 V64 a8 8 0 0 0 0 -16 V38 a8 8 0 0 0 0 -16 V18 a10 10 0 0 1 10 -10 Z"
+              fill="url(#ticketGrad)"/>
+        <line x1="96" y1="14" x2="96" y2="82" stroke="rgba(255,255,255,0.35)" stroke-width="2" stroke-dasharray="4 5"/>
+        <text x="52" y="58" font-size="34" font-weight="800" fill="#ffffff" text-anchor="middle" font-family="Vazirmatn, sans-serif">%</text>
+      </svg>
+    </div>
+
+    <div class="hero-sub">
+      <span>🚀</span>
+      <span>با کدهای اختصاصی، پلن مورد علاقه‌تو با تخفیف تهیه کن</span>
+    </div>
+  </div>
+
+  <div class="deals" id="deals">
+    <!-- FTMO -->
+    <div class="deal-card">
+      <div class="deal-info">
+        <div class="logo ftmo">
+          <span class="badge-fav">⭐ محبوب</span>
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none"><path d="M12 2 L21 7 L21 17 L12 22 L3 17 L3 7 Z" stroke="#fff" stroke-width="1.6" fill="none"/><path d="M12 7 L16.5 9.5 V14.5 L12 17 L7.5 14.5 V9.5 Z" fill="#fff"/></svg>
+        </div>
+        <div class="info-text">
+          <h3>FTMO</h3>
+          <p class="desc">پراپ فرم معتبر با سابقه درخشان</p>
+          <p class="pct">✅ ۱۰٪ تخفیف روی تمام پلن‌ها</p>
+        </div>
+      </div>
+      <div class="deal-code">
+        <span class="label">کد تخفیف</span>
+        <div class="code-pill" data-code="PROPDEALS10">
+          <svg class="copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>
+          <span class="code">PROPDEALS10</span>
+        </div>
+        <span class="expiry">⏱ اعتبار تا ۳۰ روز دیگر</span>
+      </div>
+    </div>
+
+    <!-- The 5%ers -->
+    <div class="deal-card">
+      <div class="deal-info">
+        <div class="logo fivers">
+          <span style="font-family:sans-serif;font-weight:800;color:#f5c542;font-size:20px;letter-spacing:-1px;">5%<span style="font-size:11px;vertical-align:sub;color:#f5c542;">ers</span></span>
+        </div>
+        <div class="info-text">
+          <h3>The 5%ers</h3>
+          <p class="desc">سرمایه‌گذاری هوشمند، معامله حرفه‌ای</p>
+          <p class="pct">✅ ۵٪ تخفیف روی تمام پلن‌ها</p>
+        </div>
+      </div>
+      <div class="deal-code">
+        <span class="label">کد تخفیف</span>
+        <div class="code-pill" data-code="DEALS5">
+          <svg class="copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>
+          <span class="code">DEALS5</span>
+        </div>
+        <span class="expiry">⏱ اعتبار تا ۳۰ روز دیگر</span>
+      </div>
+    </div>
+
+    <!-- FundedNext -->
+    <div class="deal-card">
+      <div class="deal-info">
+        <div class="logo fundednext">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8"><path d="M4 17 L10 11 L14 15 L20 8"/><path d="M14 8 H20 V14"/></svg>
+        </div>
+        <div class="info-text">
+          <h3>FundedNext</h3>
+          <p class="desc">پلن‌های متنوع و برداشت سریع</p>
+          <p class="pct">✅ ۸٪ تخفیف روی تمام پلن‌ها</p>
+        </div>
+      </div>
+      <div class="deal-code">
+        <span class="label">کد تخفیف</span>
+        <div class="code-pill" data-code="FNX8">
+          <svg class="copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>
+          <span class="code">FNX8</span>
+        </div>
+        <span class="expiry">⏱ اعتبار تا ۳۰ روز دیگر</span>
+      </div>
+    </div>
+
+    <!-- Topstep -->
+    <div class="deal-card">
+      <div class="deal-info">
+        <div class="logo topstep">
+          <span style="font-family:sans-serif;font-weight:800;color:#fff;font-size:13px;letter-spacing:0.5px;">TOP<br>STEP</span>
+        </div>
+        <div class="info-text">
+          <h3>Topstep</h3>
+          <p class="desc">یکی از بزرگ‌ترین پراپ فرم‌های دنیا</p>
+          <p class="pct">✅ ۱۰٪ تخفیف روی پلن‌های فاندد</p>
+        </div>
+      </div>
+      <div class="deal-code">
+        <span class="label">کد تخفیف</span>
+        <div class="code-pill" data-code="TOPDEALS10">
+          <svg class="copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>
+          <span class="code">TOPDEALS10</span>
+        </div>
+        <span class="expiry">⏱ اعتبار تا ۳۰ روز دیگر</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="trust">
+    <div class="shield">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 L20 6 V12 C20 17 16.5 20.5 12 22 C7.5 20.5 4 17 4 12 V6 Z"/><path d="M9 12 L11 14 L15 9.5"/></svg>
+    </div>
+    <div class="text">
+      <h4>کدها کاملاً اختصاصی و معتبر هستند</h4>
+      <p>با استفاده از این کدها، از تخفیف ویژه و پشتیبانی بهتر برخوردار می‌شوید.</p>
+    </div>
+  </div>
+
+  <div class="app-footer">
+    <span>Prop Deals © 2024</span>
+    <span class="heart">♡</span>
+  </div>
+
+</div>
+
+<div class="toast" id="toast">
+  <span class="dot">●</span>
+  <span id="toastText">کد کپی شد</span>
+</div>
+
+<script>
+  document.querySelectorAll('.code-pill').forEach(function(pill){
+    pill.addEventListener('click', function(){
+      var code = pill.getAttribute('data-code');
+      var restore = function(){
+        pill.classList.remove('copied');
+      };
+      var showToast = function(){
+        var toast = document.getElementById('toast');
+        document.getElementById('toastText').textContent = 'کد «' + code + '» کپی شد';
+        toast.classList.add('show');
+        pill.classList.add('copied');
+        setTimeout(function(){
+          toast.classList.remove('show');
+          restore();
+        }, 1600);
+      };
+
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(code).then(showToast).catch(showToast);
+      } else {
+        var ta = document.createElement('textarea');
+        ta.value = code;
+        document.body.appendChild(ta);
+        ta.select();
+        try{ document.execCommand('copy'); }catch(e){}
+        document.body.removeChild(ta);
+        showToast();
+      }
+
+      if(window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.HapticFeedback){
+        window.Telegram.WebApp.HapticFeedback.notificationOccurred('success');
+      }
+    });
+  });
+
+  if(window.Telegram && window.Telegram.WebApp){
+    window.Telegram.WebApp.ready();
+    window.Telegram.WebApp.expand();
+  }
+</script>
+
+</body>
+</html>
